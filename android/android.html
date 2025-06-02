@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Android</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        p {
+            font-size: 22px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Information about device</h1>
+    <p id="android-version">Android version: idk...</p>
+    <p id="device-model">Phone model: idk...</p>
+
+    <script>
+        function getAndroidVersion() {
+            const ua = navigator.userAgent;
+            const match = ua.match(/Android\s([0-9\.]+)/);
+            return match ? match[1] : null;
+        }
+
+        function getDeviceModel() {
+            const ua = navigator.userAgent;
+            const match = ua.match(/\((.*?)\)/);
+            if (match) {
+                const parts = match[1].split(";");
+                for (let part of parts) {
+                    part = part.trim();
+                    if (/^[A-Z0-9\-]{4,}$/.test(part)) {
+                        return part;
+                    }
+                }
+            }
+            return "Не удалось определить";
+        }
+
+        document.getElementById("android-version").textContent =
+            "Android version: " + (getAndroidVersion() || "Не Android");
+
+        document.getElementById("device-model").textContent =
+            "Phone model: " + getDeviceModel();
+    </script>
+</body>
+</html>

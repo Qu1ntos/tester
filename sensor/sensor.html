@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sensor</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            background-color: white;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="drawCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        let drawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        canvas.addEventListener('mousedown', e => {
+            drawing = true;
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+        });
+
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mouseout', () => drawing = false);
+
+        canvas.addEventListener('mousemove', e => {
+            if (!drawing) return;
+
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'black';
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+        });
+    </script>
+
+</body>
+</html>

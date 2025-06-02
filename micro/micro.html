@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uk"></html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Microде</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 10px;
+        }
+        #mic-level {
+            width: 100%;
+            height: 20px;
+            background: #eee;
+            margin-top: 10px;
+            position: relative;
+        }
+        #mic-bar {
+            height: 100%;
+            background: green;
+            width: 0%;
+        }
+        button {
+            margin: 10px 5px 0 0;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        video {
+            width: 100%;
+            max-height: 300px;
+            background: #000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Тест мікрофона і камер із затримкою звуку</h1>
+
+    <label for="source-select">Оберіть джерело аудіо/відео:</label>
+    <select id="source-select">
+        <option value="mic">Вбудований мікрофон (без відео)</option>
+        <option value="front-camera">Фронтальна камера</option>
+        <option value="rear-camera">Тильна камера</option>
+    </select>
+
+    <br><br>
+
+    <button id="start-test">Почати тест</button>
+    <button id="stop-test" disabled>Зупинити тест</button>
+
+    <div>
+        <button id="delay-minus">-0.5 сек затримки</button>
+        <button id="delay-plus">+0.5 сек затримки</button>
+        <span>Поточна затримка: <span id="delay-display">0.0</span> сек</span>
+    </div>
+
+    <div id="mic-level">
+        <div id="mic-bar"></div>
+    </div>
+    <p id="mic-status">Мікрофон не активний</p>
+
+    <video id="video" autoplay playsinline style="display:none;"></video>
+
+    <script>
+        const sourceSelect = document.getElementById('source-select');
+        const startBtn = document.getElementById('start-test');
+        const stopBtn = document.getElementById('stop-test');
+        const micBar = document.getElementById('mic-bar');
+        const micStatus = document.getElementById('mic-status');
+        const delayDisplay = document.getElementById('delay-display');
+        const delayMinus = document.getElementById('delay-minus');
+        const delayPlus = document.getElementById('delay-plus');
+        const video = document.getElementById('video');
+
+        let audioContext, analyser, microphone, dataArray, animationId;
+        let delayNode;
+        let stream;
+
+        let delayTime = 0;
+
+        function updateDelayDisplay() {
+            delayDisplay.textContent = delayTime.toFixed(1);
+        }
+
+        async function startTest() {
+            stopTest();
+
+            let constraints = { audio: true, video: false };
+            const source = sourceSelect.value;
+
+            if (source === 'front-camera' || source === 'rear-camera') {
+                constraints.video = {
+                    facingMode: (source === 'front-camera') ? 'user' : 'environment'
+                };
+                constraints.audio = true;
+            } else if (source === 'mic') {
+                constraints.audio = true;
+                constraints.video = false;
+            }
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+            } catch(err) {
+                micStatus.textContent = 'Помилка доступу: ' + err.message;
+                return;
+            }
+
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            microphone = audioContext.createMediaStreamSource(stream);
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            microphone.connect(analyser);
+
+            delayNode = audioContext.createDelay(5);
+            delayNode.delayTime.value = delayTime;
+
+            microphone.connect(delayNode);
+            delayNode.connect(audioContext.destination);
+
+            micStatus.textContent = 'Мікрофон активний';
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            function updateMeter() {
+                analyser.getByteFrequencyData(dataArray);
+                let values = 0;
+                for (let i = 0; i < dataArray.length; i++) {
+                    values += dataArray[i];
+                }
+                let average = values / dataArray.length;
+                micBar.style.width = Math.min(100, average) + '%';
+                animationId = requestAnimationFrame(updateMeter);
+            }
+            updateMeter();
+
+            if (source === 'front-camera' || source === 'rear-camera') {
+                video.style.display = 'block';
+                video.srcObject = stream;
+            } else {
+                video.style.display = 'none';
+                video.srcObject = null;
+            }
+        }
+
+        function stopTest() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+            micStatus.textContent = 'Мікрофон не активний';
+            micBar.style.width = '0%';
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            cancelAnimationFrame(animationId);
+
+            video.style.display = 'none';
+            video.srcObject = null;
+        }
+
+        delayMinus.onclick = () => {
+            delayTime = Math.max(0, delayTime - 0.5);
+            updateDelayDisplay();
+            if (delayNode) delayNode.delayTime.value = delayTime;
+        };
+
+        delayPlus.onclick = () => {
+            delayTime = Math.min(5, delayTime + 0.5);
+            updateDelayDisplay();
+            if (delayNode) delayNode.delayTime.value = delayTime;
+        };
+
+        startBtn.onclick = startTest;
+        stopBtn.onclick = stopTest;
+
+        updateDelayDisplay();
+    </script>
+
+</body>
+</html>
