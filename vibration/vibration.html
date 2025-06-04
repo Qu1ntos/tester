@@ -11,6 +11,10 @@
     input[type="range"] {
       width: 300px;
     }
+    #vibrateBtn {
+      height: 10vh;
+      width: 90vw;
+    }
   </style>
 </head>
 <body>
@@ -18,7 +22,7 @@
   <label for="duration">Длительность вибрации (мс): <span id="value">100</span></label><br>
   <input type="range" id="duration" min="100" max="5000" step="100" value="100">
   <br><br>
-  <button onclick="vibrate()">Вибрировать</button>
+  <button id="vibrateBtn" onclick="vibrate()">Вибрировать</button>
 
   <script>
     const range = document.getElementById('duration');
