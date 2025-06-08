@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#coordinates {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    z-index: 100;
+}
+
+#drawCanvas {
+    display: block;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#clearButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+#clearButton:hover {
+    background-color: #d32f2f;
+}
+
+.guide-line {
+    position: fixed;
+    background-color: red;
+    z-index: 50;
+    pointer-events: none;
+}
+
+#horizontal-guide {
+    height: 1px;
+    width: 100%;
+    display: none;
+}
+
+#vertical-guide {
+    width: 1px;
+    height: 100%;
+    display: none;
+}

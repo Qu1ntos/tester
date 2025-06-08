@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/tester/css/microphone.css">
+    <title>Мікрофон</title>
+</head>
+<body>
+    <label for="source-select">Оберіть джерело аудіо/відео:</label>
+    <select id="source-select">
+        <option value="mic">Вбудований мікрофон (без відео)</option>
+        <option value="front-camera">Фронтальна камера</option>
+        <option value="rear-camera">Тильна камера</option>
+    </select>
+
+    <button id="start-test">Почати тест</button>
+    <button id="stop-test" disabled>Зупинити тест</button>
+
+    <div>
+        <button id="delay-minus">-0.5 сек затримки</button>
+        <button id="delay-plus">+0.5 сек затримки</button>
+        <span>Поточна затримка: <span id="delay-display">0.0</span> сек</span>
+    </div>
+
+    <div id="mic-level">
+        <div id="mic-bar"></div>
+    </div>
+    <p id="mic-status">Мікрофон не активний</p>
+
+    <video id="video" autoplay playsinline style="display:none;"></video>
+
+    <script src="/tester/js/microphone.js"></script>
+</body>
+</html>

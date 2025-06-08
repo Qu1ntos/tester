@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/tester/css/music.css">
+    <title>Музика</title>
+</head>
+<body>
+    <audio id="player" src="music.mp3"></audio>
+
+    <div class="controller_container">
+        <button onclick="rewind()">⏪ -5s</button>
+        <button onclick="playAudio()">▶ Play</button>
+        <button onclick="pauseAudio()">⏸ Pause</button>
+        <button onclick="forward()">⏩ +5s</button>
+    </div>
+
+    <script src="/tester/js/player.js"></script>
+    <script src="/tester/js/input_width.js"></script>
+</body>
+</html>

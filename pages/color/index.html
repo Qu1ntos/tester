@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W/B/R/G/B</title>
+    <link rel="stylesheet" href="/tester/css/color.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <button onclick="changeBackground()">Змінити колір</button>
+
+    <script>
+        const colors = ['black', 'red', 'green', 'blue', 'white'];
+        let index = 0;
+
+        function changeBackground() {
+            document.body.style.backgroundColor = colors[index];
+            index = (index + 1) % colors.length;
+        }
+    </script>
+</body>
+</html>
