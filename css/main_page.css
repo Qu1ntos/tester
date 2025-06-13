@@ -25,3 +25,11 @@ body {
         width: 20vw;
     }
 }
+
+#newBtn {
+    background-color: goldenrod;
+}
+
+#addedBtn {
+    background-color: green;
+}
