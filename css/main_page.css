@@ -34,6 +34,10 @@ body {
     background-color: orange;
 }
 
+#purpleBtn {
+    background-color: purple;
+}
+
 #redBtn {
     background-color: red;
 }
