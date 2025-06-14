@@ -1,0 +1,8 @@
+{
+  "name": "Кольора v2",
+  "short_name": "Кольора",
+  "display": "fullscreen",
+  "start_url": "/tester/index.html",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
