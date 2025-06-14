@@ -1,0 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 2em;
+    background: #f0f0f0;
+}
+
+#status {
+    font-size: 2em;
+    margin-top: 1em;
+    color: #333;
+}

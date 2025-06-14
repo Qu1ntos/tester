@@ -26,10 +26,14 @@ body {
     }
 }
 
-#newBtn {
-    background-color: goldenrod;
+#greenBtn {
+    background-color: green;
 }
 
-#addedBtn {
-    background-color: green;
+#orangeBtn {
+    background-color: orange;
+}
+
+#redBtn {
+    background-color: red;
 }

@@ -1,0 +1,25 @@
+html {
+    overflow-x: hidden;
+}
+
+body {
+    transition: background-color 0.1s ease;
+    height: 5000px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0;
+    cursor: pointer;
+
+    width: 100vw;
+    height: 20vw;
+
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}

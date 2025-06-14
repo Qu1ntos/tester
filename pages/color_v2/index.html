@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кольора v2</title>
+    <link rel="stylesheet" href="/tester/css/color_v2.css">
+</head>
+<body>
+    <div class="img_container">
+        <img src="/tester/pages/color_v2/red.png" onclick="openFullscreen(this)" style="width: 200px; cursor: pointer;">  
+        <img src="/tester/pages/color_v2/green.png" onclick="openFullscreen(this)" style="width: 200px; cursor: pointer;">  
+        <img src="/tester/pages/color_v2/blue.png" onclick="openFullscreen(this)" style="width: 200px; cursor: pointer;">
+        <img src="/tester/pages/color_v2/black.png" onclick="openFullscreen(this)" style="width: 200px; cursor: pointer;">  
+        <img src="/tester/pages/color_v2/white.png" onclick="openFullscreen(this)" style="width: 200px; cursor: pointer;">  
+    </div>
+
+    <div id="fullscreenContainer" class="fullscreen-container" onclick="closeFullscreen()">
+        <img id="fullscreenImage" class="fullscreen-img">
+        <div class="close-btn" onclick="closeFullscreen(event)">×</div>
+    </div>
+
+    <script src="/tester/js/color_v2.js"></script>
+</body>
+</html>
